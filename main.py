@@ -8,8 +8,8 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Set up neural network
-    n_hidden = 10
-    nodes = [1] * (n_hidden + 1)
+    n_hidden = 1
+    nodes = [100] * (n_hidden + 1)
     network = VanillaNetwork(n_hidden=n_hidden, nodes=nodes).to(device)
 
     # set up optimizer (we use stochastic gradient descent)
