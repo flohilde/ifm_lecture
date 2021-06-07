@@ -64,15 +64,15 @@ def train_network(network, optimizer, n_iter, batch_size, f, noise, seed=0):
 
     network.train()
     for _ in range(n_iter):
-        optimizer.zero_grad()
         # create training batch
-        x = torch.from_numpy(np.random.uniform(low=-1, high=1, size=batch_size)).float()
-        #x = torch.from_numpy(np.linspace(start=-1, stop=1, num=batch_size)).float()
+        x = torch.tensor(np.random.uniform(low=-1, high=1, size=(batch_size, 1))).float()
         y = f(x)
         # perturb label y by noise
-        y_noisy = torch.from_numpy(noise(size=batch_size)).float() + y
+        y_noisy = torch.tensor(noise(size=(batch_size, 1))).float() + y
+        # reset gradients
+        optimizer.zero_grad()
         # predict y from x
-        y_hat = network(x.unsqueeze(1))
+        y_hat = network(x)
         # calculate prediction loss (MSE)
         loss = (y_hat - y_noisy).pow(2)
         # back propagate
